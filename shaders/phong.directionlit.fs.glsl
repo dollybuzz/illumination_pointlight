@@ -34,12 +34,12 @@ void main(void) {
     // 1. apply light and material interaction for diffuse value by using the texture color as the material
     vec3 diffuseValue = texture2D(uTexture, vTexcoords).rgb * lambertian;    
     // 2. apply light and material interaction for phong, assume phong material color is (0.3, 0.3, 0.3)
-    vec3 specularColorMat = texture2D(uTexture, vTexcoords).rbg * phong;
+    vec3 specularColorMat = texture2D(uTexture, vTexcoords).rgb * phong;
 
     vec3 ambient = albedo * 0.1;
-    vec3 diffuseColor = diffuseValue * 1.0;
-    vec3 specularColor = specularColorMat * 0.3;
-    vec3 finalColor = specularColor;
+    vec3 diffuseColor = diffuseValue;
+    vec3 specularColor = specularColorMat;
+    vec3 finalColor = ambient + diffuseColor + specularColor;
 
     gl_FragColor = vec4(specularColor, 1.0);
 }
