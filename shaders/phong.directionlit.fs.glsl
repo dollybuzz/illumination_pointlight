@@ -19,7 +19,10 @@ void main(void) {
 
     // todo - specular contribution
     // 1. in world space, calculate the direction from the surface point to the eye (normalized)
+    //note - normalize(to-from)
+    vec3 nEyeDirection = normalize(uCameraPosition - vWorldPosition);
     // 2. in world space, calculate the reflection vector (normalized)
+    vec3 nReflectionDirection = normalize(reflect(-nLightDirection, nWorldNormal));
     // 3. calculate the phong term
 
     vec3 albedo = texture2D(uTexture, vTexcoords).rgb;
@@ -33,5 +36,5 @@ void main(void) {
     // vec3 specularColor = todo;
     vec3 finalColor = ambient; // + diffuseColor + specularColor;
 
-    gl_FragColor = vec4(.5*lambertian, .5*lambertian, .5*lambertian, 1.0);
+    gl_FragColor = vec4(nEyeDirection, 1.0);
 }
