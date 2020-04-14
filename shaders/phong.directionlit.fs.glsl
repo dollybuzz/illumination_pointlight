@@ -11,8 +11,11 @@ varying vec3 vWorldPosition;
 void main(void) {
     // todo - diffuse contribution
     // 1. normalize the light direction and store in a separate variable
+    vec3 nLightDirection = normalize(uLightDirection);
     // 2. normalize the world normal and store in a separate variable
+    vec3 nWorldNormal = normalize(vWorldNormal);
     // 3. calculate the lambert term
+
 
     // todo - specular contribution
     // 1. in world space, calculate the direction from the surface point to the eye (normalized)
@@ -30,5 +33,5 @@ void main(void) {
     // vec3 specularColor = todo;
     vec3 finalColor = ambient; // + diffuseColor + specularColor;
 
-    gl_FragColor = vec4(finalColor, 1.0);
+    gl_FragColor = vec4(nWorldNormal, 1.0);
 }
