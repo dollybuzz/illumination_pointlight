@@ -36,5 +36,5 @@ void main(void) {
     // vec3 specularColor = todo;
     vec3 finalColor = ambient; // + diffuseColor + specularColor;
 
-    gl_FragColor = vec4(nEyeDirection, 1.0);
+    gl_FragColor = vec4(nReflectionDirection, 1.0);
 }
