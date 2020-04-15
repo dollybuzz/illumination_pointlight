@@ -130,6 +130,11 @@ function updateAndRender() {
     time.update();
     camera.update(time.deltaTime);
     
+    //todo
+    //rotate lightPosition around origin
+    var radius = 4.0;
+    lightPosition = new Vector3(Math.cos(time.secondsElapsedSinceStart) * radius, radius, Math.sin(time.secondsElapsedSinceStart) * radius);
+
     if(appInput.up) {
         rotationMatrix.setRotationY(8).multiplyVector(lightPosition);
     }
