@@ -1,6 +1,6 @@
 precision mediump float;
 
-uniform vec3 uLightDirection;
+uniform vec3 uLightPosition;
 uniform vec3 uCameraPosition;
 uniform sampler2D uTexture;
 
@@ -9,9 +9,10 @@ varying vec3 vWorldNormal;
 varying vec3 vWorldPosition;
 
 void main(void) {
+    /*
     // todo - diffuse contribution
     // 1. normalize the light direction and store in a separate variable
-    vec3 nLightDirection = normalize(uLightDirection);
+    vec3 nLightDirection = normalize(uLightPosition);
     // 2. normalize the world normal and store in a separate variable
     vec3 nWorldNormal = normalize(vWorldNormal);
     // 3. calculate the lambert term
@@ -44,6 +45,7 @@ void main(void) {
     vec3 diffuseColor = diffuseValue;
     vec3 specularColor = specularColorMat;
     vec3 finalColor = ambient + diffuseColor + specularColor;
-
-    gl_FragColor = vec4(finalColor, 1.0);
+    */
+    gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
 }
+

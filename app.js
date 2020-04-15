@@ -10,7 +10,7 @@ var sphereGeometry = null; // this will be created after loading from a file
 var groundGeometry = null;
 
 var projectionMatrix = new Matrix4();
-var lightDirection = new Vector3(5, 3, 0);
+var lightPosition = new Vector3(4, 1.5, 0);
 
 // the shader that will be used by each piece of geometry (they could each use their own shader but in this case it will be the same)
 var phongShaderProgram;
@@ -59,7 +59,7 @@ function initGL(canvas) {
 function loadAssets(onLoadedCB) {
     var filePromises = [
         fetch('./shaders/phong.vs.glsl').then((response) => { return response.text(); }),
-        fetch('./shaders/phong.directionlit.fs.glsl').then((response) => { return response.text(); }),
+        fetch('./shaders/phong.pointlit.fs.glsl').then((response) => { return response.text(); }),
         fetch('./data/sphere.json').then((response) => { return response.json(); }),
         loadImage('./data/marble.jpg'),
         loadImage('./data/crackedmud.png')
@@ -93,7 +93,7 @@ function createShaders(loadedAssets) {
         worldMatrixUniform: gl.getUniformLocation(phongShaderProgram, "uWorldMatrix"),
         viewMatrixUniform: gl.getUniformLocation(phongShaderProgram, "uViewMatrix"),
         projectionMatrixUniform: gl.getUniformLocation(phongShaderProgram, "uProjectionMatrix"),
-        lightDirectionUniform: gl.getUniformLocation(phongShaderProgram, "uLightDirection"),
+        lightPositionUniform: gl.getUniformLocation(phongShaderProgram, "uLightPosition"),
         cameraPositionUniform: gl.getUniformLocation(phongShaderProgram, "uCameraPosition"),
         textureUniform: gl.getUniformLocation(phongShaderProgram, "uTexture"),
     };
@@ -131,16 +131,16 @@ function updateAndRender() {
     camera.update(time.deltaTime);
     
     if(appInput.up) {
-        rotationMatrix.setRotationY(8).multiplyVector(lightDirection);
+        rotationMatrix.setRotationY(8).multiplyVector(lightPosition);
     }
     else if(appInput.down){
-        rotationMatrix.setRotationY(-8).multiplyVector(lightDirection);
+        rotationMatrix.setRotationY(-8).multiplyVector(lightPosition);
     }
     else if(appInput.left){
-        rotationMatrix.setRotationX(-8).multiplyVector(lightDirection);
+        rotationMatrix.setRotationX(-8).multiplyVector(lightPosition);
     }
     else if(appInput.right){
-        rotationMatrix.setRotationX(8).multiplyVector(lightDirection);
+        rotationMatrix.setRotationX(8).multiplyVector(lightPosition);
     }
 
     // specify what portion of the canvas we want to draw to (all of it, full width and height)
@@ -153,7 +153,7 @@ function updateAndRender() {
     gl.useProgram(phongShaderProgram);
     var uniforms = phongShaderProgram.uniforms;
     var cameraPosition = camera.getPosition();
-    gl.uniform3f(uniforms.lightDirectionUniform, lightDirection.x, lightDirection.y, lightDirection.z);
+    gl.uniform3f(uniforms.lightPositionUniform, lightPosition.x, lightPosition.y, lightPosition.z);
     gl.uniform3f(uniforms.cameraPositionUniform, cameraPosition.x, cameraPosition.y, cameraPosition.z);
 
     projectionMatrix.setPerspective(45, aspectRatio, 0.1, 1000);
