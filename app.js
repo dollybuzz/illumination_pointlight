@@ -125,9 +125,23 @@ function updateAndRender() {
 
     // todo
     // add keyboard controls for changing light direction here
+    var rotationMatrix = new Matrix3();
 
     time.update();
     camera.update(time.deltaTime);
+    
+    if(appInput.up) {
+        rotationMatrix.setRotationY(8).multiplyVector(lightDirection);
+    }
+    else if(appInput.down){
+        rotationMatrix.setRotationY(-8).multiplyVector(lightDirection);
+    }
+    else if(appInput.left){
+        rotationMatrix.setRotationX(-8).multiplyVector(lightDirection);
+    }
+    else if(appInput.right){
+        rotationMatrix.setRotationX(8).multiplyVector(lightDirection);
+    }
 
     // specify what portion of the canvas we want to draw to (all of it, full width and height)
     gl.viewport(0, 0, gl.canvasWidth, gl.canvasHeight);
